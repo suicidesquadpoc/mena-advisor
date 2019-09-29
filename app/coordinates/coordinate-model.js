@@ -1,9 +1,9 @@
-var pool = require('../database');
+const pool = require('../database');
 
-async function selectAllCoordinates(){
-  var rows;
+const selectAllCoordinates = async() => {
+  let rows;
   try{
-    var rows = await pool.query('SELECT * FROM `coordinates`');
+    rows = await pool.query('SELECT * FROM `coordinates`');
   } catch(e) {
     // handle errors
   }

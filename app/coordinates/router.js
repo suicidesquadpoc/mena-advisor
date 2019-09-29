@@ -1,8 +1,8 @@
-var coordinateModel = require('./coordinate-model');
-var router = require('express').Router();
+const coordinateModel = require('./coordinate-model');
+const router = require('express').Router();
 
-async function getAllCoordinates(req, res) {
-  var coordinates = await coordinateModel.selectAllCoordinates();
+const getAllCoordinates = async(req, res) => {
+  const coordinates = await coordinateModel.selectAllCoordinates();
   res.send(coordinates);
 }
 

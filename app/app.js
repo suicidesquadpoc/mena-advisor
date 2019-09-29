@@ -1,7 +1,6 @@
-var express = require('express');
-var pool = require('./database');
+const express = require('express');
 
-var app = express();
+const app = express();
 
 app.use('/', require('./coordinates/router'));
 
