@@ -6,18 +6,46 @@ First proof of concept
 
 1. Install Docker on local machine
 
-2. 'docker-compose up -d' Run the docker-compose found at the project's root
+2. Run the docker-compose found at the project's root
+```
+docker-compose up -d
+```
 
-3. 'cp sample.env .env' setting up the environment variables
+3. Setting up the environment variables
+```
+cp sample.env .env
+```
 
-4. 'npm install' to install all the required modules
+4.  Install all the required modules
+```
+npm install
+```
 
-5. 'db-migrate up' to update ur local db
-    * 'node .\node_modules\db-migrate\bin\db-migrate up' in case you did not add the modules to your path.
+5. Update your local DB
+```
+db-migrate up
+```
+or in case you did not add the modules to your path.
+```
+node .\node_modules\db-migrate\bin\db-migrate up
+```
 
-6. 'npm start' to start the app
+6. Start the app
+```
+npm start
+```
+7. If the result is an empty array, then everything is alright!
+```
+curl localhost:3000/coordinates
+```
+* ```[]```
 
-7. 'curl localhost:3000/coordinates' if the result is an empty array, then everything is alright!
+### DB Migrate
+
+
+```
+node .\node_modules\db-migrate\bin\db-migrate create <example-table>
+```
 
 ## Running the tests
 
