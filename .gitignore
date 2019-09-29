@@ -10,3 +10,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Environment variables
+.env
+
+# npm modules
+package-lock.json

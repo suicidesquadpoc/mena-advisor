@@ -6,9 +6,11 @@ First proof of concept
 
 1. Install Docker on local machine
 2. Run the docker-compose found at the project's root
-3. 'npm install' to install all the required modules
-4. 'npm migrate' to update ur local db
-5. 'npm start' to start the app
+3. 'cp sample.env .env' setting up the environment variables
+4. 'npm install' to install all the required modules
+5. 'db-migrate up' to update ur local db
+    5.1. 'node .\node_modules\db-migrate\bin\db-migrate up' in case you did not add the modules to your path.
+6. 'npm start' to start the app
 
 ## Running the tests
 
