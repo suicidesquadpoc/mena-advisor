@@ -19,7 +19,7 @@ module.exports = {
       "semi": ["error", "always"],
       "quotes": ["error", "single"],
       "comma-spacing": ["error", { "before": false, "after": true }],
-      "linebreak-style": ['error', 'unix'],
+      // TODO: "linebreak-style": ['error', 'unix'],
       "no-console": 0
     }
 };
