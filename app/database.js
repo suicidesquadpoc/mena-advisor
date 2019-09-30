@@ -1,7 +1,7 @@
-var util = require('util');
+const util = require('util');
 require('util.promisify').shim();
-var mysql = require('mysql');
-var pool = mysql.createPool({
+const mysql = require('mysql');
+const pool = mysql.createPool({
     connectionLimit : process.env.DB_CONECTION_POOL,
     host            : process.env.DB_HOST,
     user            : process.env.DB_USER,
