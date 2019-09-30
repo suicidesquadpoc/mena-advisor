@@ -10,4 +10,4 @@ const selectAllCoordinates = async () => {
   return rows;
 };
 
-module.exports = selectAllCoordinates;
+module.exports = { selectAllCoordinates };
