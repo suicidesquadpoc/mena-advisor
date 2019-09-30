@@ -1,13 +1,13 @@
 const pool = require('../database');
 
-const selectAllCoordinates = async() => {
+const selectAllCoordinates = async () => {
   let rows;
-  try{
+  try {
     rows = await pool.query('SELECT * FROM `coordinates`');
-  } catch(e) {
+  } catch (e) {
     // handle errors
   }
   return rows;
-}
+};
 
-exports.selectAllCoordinates = selectAllCoordinates;
+module.exports = selectAllCoordinates;
