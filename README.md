@@ -55,6 +55,24 @@ rules is the following one:
 npm run lint
 ```
 
+### Useful docker commands
+* List all docker images
+```
+docker ps
+```
+* Start docker image
+```
+docker-compose start
+```
+* Stop docker image
+```
+docker-compose stop
+```
+or
+```
+docker-compose down
+```
+
 ### Deployment
 Add additional notes about how to deploy this on a live system
 
