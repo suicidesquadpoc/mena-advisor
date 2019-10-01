@@ -16,5 +16,8 @@ lerna-debug.log*
 # npm modules
 package-lock.json
 
-# IDE dirs
+###### IDE dirs ######
+# Visual Studio files
 .vscode/
+# SonarQube workdir
+.scannerwork/

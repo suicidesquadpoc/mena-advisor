@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  db:
+  local_db:
     image: mysql:5.7
     restart: always
     environment:
@@ -15,7 +15,42 @@ services:
       - '3306'
       # Where our data will be persisted
     volumes:
-      - my-db:/var/lib/mysql
+      - local_db:/var/lib/mysql
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - sonar_network
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://sonarqube_db:5432/sonar
+    volumes:
+      - sonarqube:/opt/sonarqube
+      # Original volumes config
+      #- sonarqube_conf:/opt/sonarqube/conf
+      #- sonarqube_data:/opt/sonarqube/data
+      #- sonarqube_extensions:/opt/sonarqube/extensions
+  sonarqube_db:
+    image: postgres
+    networks:
+      - sonar_network
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - sonar_postgresql:/var/lib/postgresql
+      # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+      - sonar_postgresql_data:/var/lib/postgresql/data
+networks:
+  sonar_network:
+    driver: bridge
 # Names our volume
 volumes:
-  my-db:
+  local_db:
+  sonarqube:
+  # Original volumes config
+  # sonarqube_conf:
+  # sonarqube_data:
+  # sonarqube_extensions:
+  sonar_postgresql:
+  sonar_postgresql_data:

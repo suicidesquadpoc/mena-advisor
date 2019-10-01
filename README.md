@@ -38,24 +38,43 @@ curl localhost:3000/coordinates
 ```
 * ```[]```
 
-### DB Migrate
+## DB Migrate
 When creating a new table for the data model a db-migrate script is needed to execute:
 ```
 node .\node_modules\db-migrate\bin\db-migrate create <example-table>
 ```
 
-### Running the tests
-No test atm
-
-### ESLint
-In order to standardize and establish some code rules, ESLint will check the whole project recursively. 
+## ESLint
+In order to standardize and establish some code rules, ESLint will check the whole project recursively.
 Therefore, a commit will not be merged into develop if it does not pass the ESLint rules. The command to run ESLint
 rules is the following one:
 ```
 npm run lint
 ```
+## SonarQube (Code Quality)
+To inspect the quality of our code we'll be using SonarQube locally and manually until we find a more comfortable way.
 
-### Useful docker commands
+### Preconditions
+1. Make sure that your __local dependencies are up to date.__
+```
+npm install
+```
+2. sonar related docker services are up and running.
+```
+docker-compose up
+```
+### Runing sonar
+Execute on project's root
+```
+npm run sonar
+```
+### Analysis result
+http://localhost:9000/dashboard?id=no-more-mena
+
+### Other considerations
+Sonar's default credentials are __admin/admin__
+
+## Useful docker commands
 * List all docker images
 ```
 docker ps
@@ -73,16 +92,19 @@ or
 docker-compose down
 ```
 
-### Deployment
+# Running the tests
+No test atm
+
+# Deployment
 Add additional notes about how to deploy this on a live system
 
-## Versioning
+# Versioning
 for example, we should take a look:
 
  [SemVer](http://semver.org/) for versioning. For the versions available.
 
-## Authors
-* **THE Marc** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+# Authors
+* **THE Marc** - *Initial work* - [mmoralesdev](https://github.com/mmoralesdev)
 
 ## License
 To be defined
