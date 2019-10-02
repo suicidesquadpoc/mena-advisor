@@ -44,8 +44,20 @@ When creating a new table for the data model a db-migrate script is needed to ex
 node .\node_modules\db-migrate\bin\db-migrate create <example-table>
 ```
 
-## ESLint
-In order to standardize and establish some code rules, ESLint will check the whole project recursively.
+### Running the tests
+Mocha, Chai and Supertest are used for Test coverage.
+
+- Mocha is a test runner for NodeJS, used to define test cycles and scenarios. (https://mochajs.org)
+- Chai offers a more human like language to do assertions, expects, etc. (https://www.chaijs.com)
+- Supertest is used to consume the API Endpoints through HTTP requests. (https://www.npmjs.com/package/supertest)
+
+All the test should be executed before commiting any code through the following command:
+```
+npm test
+```
+
+### ESLint
+In order to standardize and establish some code rules, ESLint will check the whole project recursively. 
 Therefore, a commit will not be merged into develop if it does not pass the ESLint rules. The command to run ESLint
 rules is the following one:
 ```
