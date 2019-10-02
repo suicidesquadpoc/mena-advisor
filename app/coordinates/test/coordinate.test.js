@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 const supertest = require('supertest');
 const expect = require('chai').expect;
@@ -9,15 +10,16 @@ afterEach(async () => {
 });
 
 describe('GET /coordinates', () => {
-  it('it should return an empty body []', async () => {
-    const response = [];
-    await supertest(app)
+  it('it should return an empty body when there are no results', async () => {
+
+    const res = await supertest(app)
       .get('/coordinates')
-      .expect(200)
-      .expect(response);
+      .expect(200);
+    expect(res.body).to.be.an('array').that.is.empty;
   });
 
-  it('it should return coordinates {}', async () => {
+  it('it should return coordinates', async () => {
+
     const coordinate = {
       latitude: '0.5',
       longitude: '0.2'
@@ -27,7 +29,7 @@ describe('GET /coordinates', () => {
     const res = await supertest(app)
       .get('/coordinates')
       .expect(200);
-    expect(res.body).to.be.an.instanceof(Array);
+    expect(res.body).to.be.an('array');
     expect(res.body).to.have.lengthOf.above(0);
     expect(res.body[0]).to.have.property('coor_id');
     expect(res.body[0]).to.have.property('latitude');
