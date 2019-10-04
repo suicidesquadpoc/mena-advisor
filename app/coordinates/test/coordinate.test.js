@@ -11,7 +11,6 @@ afterEach(async () => {
 
 describe('GET /coordinates', () => {
   it('it should return an empty body when there are no results', async () => {
-
     const res = await supertest(app)
       .get('/coordinates')
       .expect(200);
@@ -19,7 +18,6 @@ describe('GET /coordinates', () => {
   });
 
   it('it should return coordinates', async () => {
-
     const coordinate = {
       latitude: '0.5',
       longitude: '0.2'
