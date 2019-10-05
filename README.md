@@ -45,7 +45,7 @@ node .\node_modules\db-migrate\bin\db-migrate create <example-table>
 ```
 
 ### Running the tests
-Mocha, Chai and Supertest are used for Test coverage.
+Mocha, Chai and Supertest are used for Test Automation.
 
 - Mocha is a test runner for NodeJS, used to define test cycles and scenarios. (https://mochajs.org)
 - Chai offers a more human like language to do assertions, expects, etc. (https://www.chaijs.com)
