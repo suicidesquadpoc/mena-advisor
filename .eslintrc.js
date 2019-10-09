@@ -20,6 +20,8 @@ module.exports = {
       "quotes": ["error", "single"],
       "comma-spacing": ["error", { "before": false, "after": true }],
       // TODO: "linebreak-style": ['error', 'unix'],
-      "no-console": 0
+      // TODO: for now console.log is a warning
+      // even though it will be an error once we will have a logging system
+      "no-console": ["warn"]
     }
 };
