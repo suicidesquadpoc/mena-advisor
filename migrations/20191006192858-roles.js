@@ -16,17 +16,17 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
 
-  const createCoordinatesSentence =
-  'CREATE TABLE coordinates (' +
-  'coordinate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,'+
-  'longitude DECIMAL(10,6) SIGNED NOT NULL,'+
-  'latitude DECIMAL(10,6) SIGNED NOT NULL,'+
-  'time DATETIME NOT NULL,'+
-  'elevation DECIMAL (7,2) SIGNED,'+
-  'created_at DATETIME DEFAULT CURRENT_TIMESTAMP'+
+  const createRolesSentence =
+  'CREATE TABLE roles (' +
+  'role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,'+
+  'description VARCHAR(255) NOT NULL,'+
+  'active TINYINT(1) NOT NULL DEFAULT 1,'+
+  'created_at DATETIME DEFAULT CURRENT_TIMESTAMP,'+
+  'updates_at DATETIME ON UPDATE CURRENT_TIMESTAMP,'+
+  'deleted_at DATETIME'+
   ')';
 
-  db.runSql(createCoordinatesSentence, function(err) {
+  db.runSql(createRolesSentence, function(err) {
     if (err) return callback(err);
     return callback();
   });
@@ -34,7 +34,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('coordinates',callback);
+  db.dropTable('roles',callback);
 };
 
 exports._meta = {

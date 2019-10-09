@@ -16,17 +16,16 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
 
-  const createCoordinatesSentence =
-  'CREATE TABLE coordinates (' +
-  'coordinate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,'+
-  'longitude DECIMAL(10,6) SIGNED NOT NULL,'+
-  'latitude DECIMAL(10,6) SIGNED NOT NULL,'+
-  'time DATETIME NOT NULL,'+
-  'elevation DECIMAL (7,2) SIGNED,'+
-  'created_at DATETIME DEFAULT CURRENT_TIMESTAMP'+
+  const createSessionHasCoordinatesSentence =
+  'CREATE TABLE session_has_coordinates (' +
+  'session_id INT NOT NULL,'+
+  'coordinate_id INT NOT NULL,'+
+  'PRIMARY KEY (session_id, coordinate_id),'+
+  'FOREIGN KEY (session_id) REFERENCES sessions(session_id),'+
+  'FOREIGN KEY (coordinate_id) REFERENCES coordinates(coordinate_id)'+
   ')';
 
-  db.runSql(createCoordinatesSentence, function(err) {
+  db.runSql(createSessionHasCoordinatesSentence, function(err) {
     if (err) return callback(err);
     return callback();
   });
@@ -34,7 +33,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('coordinates',callback);
+  db.dropTable('session_has_coordinates',callback);
 };
 
 exports._meta = {
