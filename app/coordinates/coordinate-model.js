@@ -1,4 +1,5 @@
 const pool = require('../database');
+const mysql = require('mysql');
 
 const selectAllCoordinates = async () => {
   let rows;
@@ -10,4 +11,19 @@ const selectAllCoordinates = async () => {
   return rows;
 };
 
-module.exports = { selectAllCoordinates };
+const selectCoordinate = async (id) => {
+  let rows;
+  let sql = 'SELECT * FROM `coordinates` WHERE coordinate_id = ?';
+  sql = mysql.format(sql, [id]);
+  try {
+    rows = await pool.query(sql);
+  } catch (e) {
+    // handle errors
+  }
+  return rows[0];
+};
+
+module.exports = {
+  selectAllCoordinates,
+  selectCoordinate
+};

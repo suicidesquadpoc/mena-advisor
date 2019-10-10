@@ -11,8 +11,12 @@ const getCoordinate = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).jsonp(errors.array());
   } else {
-    const coordinates = await coordinateModel.selectAllCoordinates();
-    res.send(coordinates);
+    const coordinate = await coordinateModel.selectCoordinate(req.params.id);
+    if (coordinate) {
+      res.status(200).send(coordinate);
+    } else {
+      res.status(204).send(coordinate);
+    }
   }
 };
 
