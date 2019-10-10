@@ -22,9 +22,7 @@ jobs:
         npm install
         cp sample.env .env
         docker-compose up
-        db-migrate up
         npm run lint
-        npm test
         docker-compose stop
         npm run build --if-present
       env:
