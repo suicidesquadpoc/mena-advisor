@@ -21,9 +21,8 @@ jobs:
       run: |
         npm install
         cp sample.env .env
-        docker-compose up
         npm run lint
-        docker-compose stop
+        npm test
         npm run build --if-present
       env:
         CI: true
