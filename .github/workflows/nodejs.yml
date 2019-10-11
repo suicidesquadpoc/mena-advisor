@@ -17,15 +17,26 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and lint
+    - name: Setup environment variables
+      run: |
+        cp sample.env .env
+    - name: npm install
       run: |
         npm install
-        cp sample.env .env
-        npm run lint
-        docker-compose rm -v
-        docker-compose up -d
-        npm test
-        docker-compose stop
+      env:
+        CI: true
+    - name: docker up
+        run: |
+          docker-compose rm -v
+          docker-compose up -d
+    - name: Run code check lint
+        run: |
+          npm run lint
+    - name: run test
+        run: |
+          npm test
+    - name: npm build
+      run: |
         npm run build --if-present
       env:
         CI: true
