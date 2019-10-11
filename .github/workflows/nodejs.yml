@@ -25,10 +25,13 @@ jobs:
         npm install
       env:
         CI: true
-    - name: Run docker up
+    - name: Run docker-compose up
       run: |
         docker-compose rm -v
         docker-compose up -d
+    - name: Create database
+      run: |
+        mysql -u root -e "create database db";
     - name: Run code check lint
       run: |
         npm run lint
