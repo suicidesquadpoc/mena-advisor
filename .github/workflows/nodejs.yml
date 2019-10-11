@@ -34,7 +34,7 @@ jobs:
         docker-compose up -d
     - name: Connect to database
       run: |
-        mysql --host 127.0.0.1 --port 3307 -uroot -proot -e "SHOW DATABASES"
+        mysql --host localhost --port 3307 -uroot -proot -e "SHOW DATABASES"
     - name: Setup database
       run: |
         node ./node_modules/db-migrate/bin/db-migrate up
