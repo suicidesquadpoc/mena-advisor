@@ -20,22 +20,25 @@ jobs:
     - name: Setup environment variables
       run: |
         cp sample.env .env
-    - name: npm install
+    - name: Run npm install
       run: |
         npm install
       env:
         CI: true
-    - name: docker up
+    - name: Run docker up
       run: |
         docker-compose rm -v
         docker-compose up -d
     - name: Run code check lint
       run: |
         npm run lint
-    - name: run test
+    - name: Setup database
+      run: |
+        node ./node_modules/db-migrate/bin/db-migrate up
+    - name: Run test
       run: |
         npm test
-    - name: npm build
+    - name: Run npm build
       run: |
         npm run build --if-present
       env:
