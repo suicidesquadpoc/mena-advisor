@@ -28,6 +28,9 @@ jobs:
     - name: Run code check lint
       run: |
         npm run lint
+    - name: Shutdown Ubuntu MySQL (SUDO)
+      run: |
+        sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
     - name: Run docker-compose up
       run: |
         docker-compose rm -v
