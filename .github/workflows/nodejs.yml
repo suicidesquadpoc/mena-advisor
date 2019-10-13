@@ -7,6 +7,16 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+        ports:
+            - '8888:3306'
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     strategy:
       matrix:
         node-version: [10.x, 12.x]
@@ -28,25 +38,6 @@ jobs:
     - name: Run code check lint
       run: |
         npm run lint
-    - name: Shutdown Ubuntu MySQL (SUDO)
+    - name: MYSQL
       run: |
-        sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
-    - name: Run docker-compose up
-      run: |
-        docker-compose rm -v
-        docker-compose up -d
-        docker ps
-    - name: Connect to database
-      run: |
-        mysql --host localhost --port 3306 -uadmin -padmin -e "SHOW DATABASES"
-    - name: Setup database
-      run: |
-        node ./node_modules/db-migrate/bin/db-migrate up
-    - name: Run test
-      run: |
-        npm test
-    - name: Run npm build
-      run: |
-        npm run build --if-present
-      env:
-        CI: true
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db;'
