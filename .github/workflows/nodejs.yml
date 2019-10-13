@@ -41,3 +41,14 @@ jobs:
     - name: MYSQL
       run: |
         mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db;'
+    - name: Setup database
+      run: |
+        node ./node_modules/db-migrate/bin/db-migrate up
+    - name: Run test
+      run: |
+        npm test
+    - name: Run npm build
+      run: |
+        npm run build --if-present
+      env:
+        CI: true
