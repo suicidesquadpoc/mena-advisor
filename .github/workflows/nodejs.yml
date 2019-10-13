@@ -40,7 +40,7 @@ jobs:
         npm run lint
     - name: MYSQL
       run: |
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db;'
+        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db; USE db;'
         mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE TABLE coordinates (coordinate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, longitude DECIMAL(10,6) SIGNED NOT NULL, latitude DECIMAL(10,6) SIGNED NOT NULL, time DATETIME NOT NULL, elevation DECIMAL (7,2) SIGNED, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);'
     - name: Run test
       run: |
