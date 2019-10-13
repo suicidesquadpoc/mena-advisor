@@ -42,7 +42,7 @@ jobs:
       run: |
         mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db;'
         mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE TABLE db.coordinates (coordinate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, longitude DECIMAL(10,6) SIGNED NOT NULL, latitude DECIMAL(10,6) SIGNED NOT NULL, time DATETIME NOT NULL, elevation DECIMAL (7,2) SIGNED, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);'
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY password';
+        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'grant ALL PRIVILEGES ON *.* TO \'root\'@\'%\'';
     - name: Run test
       run: |
         npm test
