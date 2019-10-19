@@ -63,8 +63,7 @@ jobs:
         DB_PASSWORD: root
         DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
       run: |
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
-        mysql -u root -e "CREATE DATABASE db;"
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root';"
         node ./node_modules/db-migrate/bin/db-migrate up
     - name: Run test
       env:
