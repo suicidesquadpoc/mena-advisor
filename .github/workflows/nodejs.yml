@@ -53,12 +53,6 @@ jobs:
         sudo apt-get install -y mysql-client libmysqlclient-dev
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
-    - name: Run test
-      env:
-        DB_PASSWORD: root
-        DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
-      run: |
-        npm test
     - name: Install & Run db-migrate
       env:
         DB_PASSWORD: root
@@ -67,6 +61,12 @@ jobs:
         npm install db-migrate db-migrate-mysql
         node ./node_modules/db-migrate/bin/db-migrate up
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
+    - name: Run test
+      env:
+        DB_PASSWORD: root
+        DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
+      run: |
+        npm test
     - name: Run npm build
       run: |
         npm run build --if-present
