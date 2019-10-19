@@ -59,7 +59,7 @@ jobs:
         DB_PASSWORD: root
         DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
       run: |
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "CREATE DATABASE dbname;"
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "CREATE DATABASE db;"
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
     - name: Run db-migrate
       env:
