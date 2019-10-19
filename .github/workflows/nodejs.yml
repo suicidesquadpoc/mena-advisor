@@ -64,9 +64,7 @@ jobs:
         DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
       run: |
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
-        npm install db-migrate db-migrate-mysql
         mysql -u root -e "CREATE DATABASE db;"
-        node ./node_modules/db-migrate/bin/db-migrate createdb db
         node ./node_modules/db-migrate/bin/db-migrate up
     - name: Run test
       env:
