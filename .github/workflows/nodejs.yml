@@ -41,6 +41,7 @@ jobs:
 
     - name: Setup MYSQL & Run db-migrate
       env:
+        NODE_ENV: dev
         DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
         DB_USER: root
         DB_PASS: root
