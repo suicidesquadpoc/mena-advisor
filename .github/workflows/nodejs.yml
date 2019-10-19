@@ -47,7 +47,6 @@ jobs:
         DB_PASS: root
         DB_HOST: 127.0.0.1
         DB_DATABASE: db
-        DB_CONECTION_POOL: 10
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
@@ -63,7 +62,6 @@ jobs:
         DB_PASS: root
         DB_HOST: 127.0.0.1
         DB_DATABASE: db
-        DB_CONECTION_POOL: 10
       run: |
         npm test
 
