@@ -52,18 +52,14 @@ jobs:
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
-    - name: Create DB & grant privileges
-      run: |
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root';"
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "CREATE DATABASE db;"
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "USE db;"
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW databases;"
     - name: Install & Run db-migrate
       env:
         DB_PASSWORD: root
         DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
       run: |
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root';"
+        node ./node_modules/db-migrate/bin/db-migrate db:create db
         node ./node_modules/db-migrate/bin/db-migrate up
     - name: Run test
       env:
