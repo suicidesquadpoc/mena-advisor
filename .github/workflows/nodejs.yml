@@ -8,18 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
+      # How to use MySQL
       mysql:
-        image: mysql:8.0
+        image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: root
         ports:
-            - '8888:3306'
+        - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [10.x, 12.x]
+        # Set N number of parallel jobs you want to run tests on.
+        # Use higher number if you have slow tests to split them on more parallel jobs.
+        # Remember to update ci_node_index below to 0..N-1
+        ci_node_total: [1]
+        #ci_node_total: [5]
+        # set N-1 indexes for parallel jobs
+        # When you run 2 parallel jobs then first job will have index 0, the second job will have index 1 etc
+        ci_node_index: [0]
+        #ci_node_index: [0, 1, 2, 3, 4]
 
     steps:
     - uses: actions/checkout@v1
@@ -40,12 +50,13 @@ jobs:
         npm run lint
     - name: MYSQL
       run: |
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS db;'
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE TABLE db.coordinates (coordinate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, longitude DECIMAL(10,6) SIGNED NOT NULL, latitude DECIMAL(10,6) SIGNED NOT NULL, time DATETIME NOT NULL, elevation DECIMAL (7,2) SIGNED, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);'
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e "grant ALL PRIVILEGES ON *.* TO 'root'@'localhost'";
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'USE db;'
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'SHOW tables;'
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot mysql
     - name: Run test
+      env:
+        DB_PASSWORD: root
+        DB_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
       run: |
         npm test
     - name: Run npm build
