@@ -44,6 +44,14 @@ When creating a new table for the data model a db-migrate script is needed to ex
 node .\node_modules\db-migrate\bin\db-migrate create <example-table>
 ```
 
+### Execute workflow
+The workflow is the ESLint + Test execution embedded into a single command.
+Before committing any change, the workflow should be executed.
+
+```
+npm run workflow
+```
+
 ### Running the tests
 Mocha, Chai and Supertest are used for Test coverage.
 
