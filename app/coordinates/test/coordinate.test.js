@@ -29,7 +29,7 @@ describe('GET /coordinates', () => {
       .expect(200);
     expect(res.body).to.be.an('array');
     expect(res.body).to.have.lengthOf.above(0);
-    expect(res.body[0]).to.have.property('coor_id');
+    expect(res.body[0]).to.have.property('coordinate_id');
     expect(res.body[0]).to.have.property('latitude');
     expect(res.body[0]).to.have.property('longitude');
   });

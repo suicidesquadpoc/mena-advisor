@@ -7,9 +7,24 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     strategy:
+      fail-fast: false
       matrix:
         node-version: [10.x, 12.x]
+        # Set N number of parallel jobs you want to run tests on.
+        ci_node_total: [1]
+        # set N-1 indexes for parallel jobs
+        ci_node_index: [0]
+        #ci_node_index: [0, 1, 2, 3, 4]
 
     steps:
     - uses: actions/checkout@v1
@@ -17,10 +32,44 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and lint
+
+    - name: Run npm install
       run: |
         npm install
-        npm run lint --if-present
+      env:
+        CI: true
+
+    - name: Setup MYSQL & Run db-migrate
+      env:
+        NODE_ENV: dev
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        DB_USER: root
+        DB_PASS: root
+        DB_HOST: 127.0.0.1
+        DB_DATABASE: db
+      run: |
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root';"
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "CREATE DATABASE db;"
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "USE db;"
+        node ./node_modules/db-migrate/bin/db-migrate up:all
+
+    - name: Run test
+      env:
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        DB_USER: root
+        DB_PASS: root
+        DB_HOST: 127.0.0.1
+        DB_DATABASE: db
+      run: |
+        npm test
+
+    - name: Run code check lint
+      run: |
+        npm run lint
+
+    - name: Run npm build
+      run: |
         npm run build --if-present
       env:
         CI: true
