@@ -5,6 +5,10 @@ const expect = require('chai').expect;
 const app = require('../../app');
 const db = require('../../../test/lib/database-helper');
 
+beforeEach(async () => {
+  await db.clear('coordinates');
+});
+
 afterEach(async () => {
   await db.clear('coordinates');
 });
@@ -19,8 +23,10 @@ describe('GET /coordinates', () => {
 
   it('it should return coordinates', async () => {
     const coordinate = {
-      latitude: '0.5',
-      longitude: '0.2'
+      latitude: 0.5,
+      longitude: 0.2,
+      time: 'NOW()',
+      elevation: 1.5
     };
 
     await db.save('coordinates', coordinate);
@@ -29,7 +35,7 @@ describe('GET /coordinates', () => {
       .expect(200);
     expect(res.body).to.be.an('array');
     expect(res.body).to.have.lengthOf.above(0);
-    expect(res.body[0]).to.have.property('coor_id');
+    expect(res.body[0]).to.have.property('coordinate_id');
     expect(res.body[0]).to.have.property('latitude');
     expect(res.body[0]).to.have.property('longitude');
   });

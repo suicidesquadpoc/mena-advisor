@@ -1,25 +1,29 @@
 /* eslint-disable no-template-curly-in-string */
 const db = require('../../app/database');
+const _ = require('lodash');
 
-const clear = async (table) => {
-  let result;
+const clear = async (tableName) => {
   try {
-    result = await db.query('DELETE FROM `' + table + '`');
+    return db.query(`DELETE FROM ${tableName}`);
   } catch (e) {
     console.error(e);
   }
-  return result;
 };
 
-const save = async (table, coordinate) => {
-  let result;
+const save = async (tableName, entity) => {
   try {
-    // TODO: customizable columns
-    result = await db.query('INSERT INTO `' + table + '` (latitude, longitude) VALUES (' + coordinate.latitude + ', ' + coordinate.longitude + ')');
+    return db.query(`INSERT INTO ${tableName} (${setColumns(entity)}) VALUES (${setValues(entity)})`);
   } catch (e) {
     console.error(e);
   }
-  return result;
+};
+
+const setColumns = (entity) => {
+  return _.join(Object.keys(entity), ', ');
+};
+
+const setValues = (entity) => {
+  return _.join(Object.values(entity), ', ');
 };
 
 module.exports = {

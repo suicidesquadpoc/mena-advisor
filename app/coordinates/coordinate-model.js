@@ -6,7 +6,7 @@ const selectAllCoordinates = async () => {
   try {
     rows = await pool.query('SELECT * FROM `coordinates`');
   } catch (e) {
-    // handle errors
+    // TODO: handle errors
   }
   return rows;
 };
