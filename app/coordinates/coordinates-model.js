@@ -18,7 +18,7 @@ const selectCoordinate = async (id) => {
   try {
     rows = await pool.query(sql);
   } catch (e) {
-    // handle errors
+    // TODO: handle errors
   }
   return rows[0];
 };

@@ -1,4 +1,4 @@
-const coordinateModel = require('./coordinate-model');
+const coordinateModel = require('./coordinates-model');
 const router = require('express').Router();
 const { param, validationResult } = require('express-validator');
 
