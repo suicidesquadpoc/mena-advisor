@@ -44,6 +44,14 @@ When creating a new table for the data model a db-migrate script is needed to ex
 node .\node_modules\db-migrate\bin\db-migrate create <example-table>
 ```
 
+### Validations
+
+Documentation of the used libraries to validate requests:
+
+[express-validator](https://express-validator.github.io/docs/validation-chain-api.html)
+
+[validator.js](https://github.com/validatorjs/validator.js#validators)
+
 ### Execute workflow
 The workflow is the ESLint + Test execution embedded into a single command.
 Before committing any change, the workflow should be executed.
